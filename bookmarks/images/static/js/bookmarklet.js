@@ -22,13 +22,36 @@
         
         // Добавление скрытия букмарклета при нажатии на крестик.
         jQuery('#bookmarklet #close').click(function(){
-        jQuery('#bookmarklet').remove();
-});
-    };
+            jQuery('#bookmarklet').remove();
+        });
+
+        // Находим картинки на текущем сайте и вставляем их в окно букмарклета.
+        jQuery.each(jQuery('img[src$="jpg"]'), function(index, image) {
+            if (jQuery(image).width() >= min_width && jQuery(image).height() >= min_height){
+                image_url = jQuery(image).attr('src');
+                jQuery('#bookmarklet .images').append('<a href="#"><img src="'+image_url +'" /></a>');
+            }
+        });
+
+        // Когда изображение выбрано, добавляем его в список сохраненных картинок на нашем сайте.
+        jQuery('#bookmarklet .images a').click(function(e){
+            selected_image = jQuery(this).children('img').attr('src');
+            // Скрываем букмарклет.
+            jQuery('#bookmarklet').hide();
+            // Открываем новое окно с формой сохранения изображения.
+            window.open(site_url +'images/create/?url='
+            + encodeURIComponent(selected_image)
+            + '&title=' + encodeURIComponent(jQuery('title').text()),
+            '_blank');
+        });
+    }
+
+
     // Проверка, подключена ли JQuery.
     if(typeofwindow.jQuery != 'undefined'){
         bookmarklet();
-    } else {
+    }
+    else {
         // Проверка, что атрибут $ окна не зянят другим объектом
         var conflict = typeof window.$ != 'undefined';
         // Создание тега <script> c загрузкой    
