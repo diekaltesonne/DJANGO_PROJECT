@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
@@ -70,4 +71,22 @@ def edit(request):
         user_form = UserEditForm(instance = request.user )
         profile_form = ProfileEditForm(instance = request.user.profile)
     return render(request,'account/edit.html',{'user_form': user_form,'profile_form': profile_form})
-    
+
+@ajax_required
+@require_POST
+@login_required
+
+def user_follow(request):
+    user_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if user_id and action:
+        try:
+            user = User.objects.get(id=user_id)
+            if action == 'follow':
+                Contact.object.get_or_create(user_from=request.user,user_to=user)
+            else:
+                Contact.object.filter(user_from=request.user, user_to=user).delete)()
+            return JsonResponse({'status':'ok'})
+        except User.DoesNotExist:
+            return JsonResponse({'status':'ok'})
+    return JsonResponse({'status':'ok'})
