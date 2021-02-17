@@ -30,6 +30,9 @@
             {% endif %}
             </span>
         </div>
+        <li {% if section == "people" %}class="selected"{% endif %}>
+            <a href="{% url "user_list" %}">People</a>
+        </li>
         {% if messages %}
             <ul class = "messages">
                 {% for message in messages %}
