@@ -10,6 +10,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return 'Profile for user {}'.format(self.user.username)
+        
 class Contact(models.Model):
     user_from = models.ForeignKey('auth.User', related_name= 'rel_from_set', on_delete=models.CASCADE)
     user_to = models.ForeignKey('auth.User', related_name='rel_to_set',on_delete=models.CASCADE)
