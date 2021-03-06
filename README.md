@@ -1,2 +1,7 @@
-# DJANGO_PROJECT
-FOR DJANGO LEARNING
+# Django project
+#### INFO
+
+
+
+
+

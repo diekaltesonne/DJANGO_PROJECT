@@ -11,14 +11,12 @@
         <h2>
             <a href="{{ product.category.get_absolute_url }}">{{product.category }}</a>
         </h2>
-        <p class="price">${{ product.price }}</p>
-        {{ product.description|linebreaks }}
-    </div>
-    <p class="price">${{ product.price }}</p>
-        <form action="{% url "cart:cart_add" product.id %}" method="post">
+        <p class="price">${{ product.price }} sdfsdfsdf</p>
+         <form action="{% url "cart:cart_add" product.id %}" method="post">
             {{ cart_product_form }}
             {% csrf_token %}
             <input type="submit" value="Add to cart">
         </form>
-    {{ product.description|linebreaks }}
+        {{ product.description|linebreaks }}
+    </div>
 {% endblock %}
