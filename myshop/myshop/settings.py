@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
 
 ]
 
@@ -130,3 +131,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 CART_SESSION_ID = 'cart'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Настройки Braintree.
+BRAINTREE_MERCHANT_ID = 'ywbksxmwjp57d9cq' # ID продавца.
+BRAINTREE_PUBLIC_KEY = 'wwcbt9wvcnx5xfg6' # Публичный ключ.
+BRAINTREE_PRIVATE_KEY = 'c76137d6427ae1305815e50615ba93c1' # Секретный ключ.
+from braintree import Configuration, Environment
+Configuration.configure(
+ Environment.Sandbox,
+ BRAINTREE_MERCHANT_ID,
+ BRAINTREE_PUBLIC_KEY,
+ BRAINTREE_PRIVATE_KEY
+)
